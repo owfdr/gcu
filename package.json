@@ -1,0 +1,39 @@
+{
+  "name": "gcu",
+  "version": "0.1.0",
+  "description": "Git Change User - change git user with good attitude",
+  "main": "bin/index.js",
+  "files": [
+    "bin",
+    "src"
+  ],
+  "type": "module",
+  "bin": "bin/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx ts-node src/cli.ts"
+  },
+  "keywords": [
+    "git",
+    "change",
+    "switch",
+    "user",
+    "email",
+    "attitude"
+  ],
+  "author": "owfdr <owfdr@ourworld.center>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "commander": "^9.4.1",
+    "conf": "^10.2.0",
+    "execa": "^6.1.0",
+    "inquirer": "^9.1.4"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^18.11.18",
+    "ts-node": "^10.9.1",
+    "tsc": "^2.0.4"
+  }
+}
