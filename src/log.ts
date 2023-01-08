@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { Config } from "./git";
 
 type Message = "welcome" | "globalStatus" | "localStatus" | "notFound" | "added"
 
@@ -31,12 +32,30 @@ export default {
         }
 
         if (type === "notFound") {
-            console.log(chalk.yellow(chalk.bold(`Global git user profile not found.`)))
+            console.log(chalk.yellow(chalk.bold(` 😿 git user profile not found...`)))
+            console.log()
         }
 
         if (type === "added") {
-            console.log(chalk.green(data[0], `<${data[1]}>`, "has been successfully added"))
+            console.log()
+            console.log(chalk.green(chalk.bold(`'${data[0]} <${data[1]}>'`, "is registered!")))
         }
 
-    }
+    },
+    dashboard({ global, local }: Config) {
+        if (global) {
+            console.log(" 🌎 Global user name  :", chalk.blue(`'${global.name}'`))
+            console.log(" 🌎 Global user email :", chalk.blue(`'${global.email}'`))
+            console.log()
+        }
+
+        if (local) {
+            console.log(" 📁 Local user name   :", chalk.gray(`'${local.name}'`))
+            console.log(" 📁 Local user email  :", chalk.gray(`'${local.email}'`))
+            console.log()
+        } else {
+            console.log(chalk.yellow(` 💡 No local configs have been found`))
+            console.log()
+        }
+    },
 }
