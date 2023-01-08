@@ -3,31 +3,22 @@ import { Config } from "./git.js";
 import { saveToStore } from "./store.js";
 import log from "./log.js";
 
-export default function switchProfile(config: Config) {
-    const { global, local } = config
-    
-    log.message("globalStatus", global?.name, global?.email)
-    log.message("localStatus", local?.name, local?.email)
+export default async function switchProfile(config: Config) {
+    log.dashboard(config)
 
-    return new Promise<void>(async resolve => {
-        const { scope } = await prompt('whichScope')
+    const { scope } = await prompt('whichScope')
 
-        if (scope === "global") {
-            const index = await chooseUser()
+    if (scope === "global") {
+        const index = await chooseUser()
+        writeToGitProfile(index)
+    }
 
-            writeToGitProfile(index)
-            resolve()
-        }
+    if (scope === "local") {
+        const index = await chooseUser()
+        writeToGitProfile(index)
+    }
 
-        if (scope === "local") {
-            const index = await chooseUser()
-
-            writeToGitProfile(index)
-            resolve()
-        }
-
-        process.exit(0)
-    })
+    process.exit(0)
 }
 
 function writeToGitProfile(index: number) {
@@ -35,16 +26,14 @@ function writeToGitProfile(index: number) {
     console.log("writing to git profile...")
 }
 
-function chooseUser() {
-    return new Promise<number>(async resolve => {
-        const { user } = await prompt("whichUser")
+async function chooseUser() {
 
-        if (user === -1) {
-            await prompt("newProfile").then(saveToStore)
-            await chooseUser()
-        } else {
-            resolve(user)
-        }
-    })
+    const { user } = await prompt("whichUser")
+
+    if (user === -1) {
+        await prompt("newProfile").then(saveToStore)
+        await chooseUser()
+    }
+
+    return user
 }
-
