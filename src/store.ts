@@ -1,7 +1,7 @@
 import Conf from "conf/dist/source/index.js";
 import log from "./log.js";
 
-const store = new Conf();
+const store = new Conf({ projectName: "gcu" });
 
 if (store.get("users") === undefined) {
     store.set("users", [])
@@ -22,9 +22,9 @@ export function saveToStore({ name, email }: User) {
     log.message("added", name, email)
 }
 
-export function removeFromStore({name, email}: User) {
+export function removeFromStore({ name, email }: User) {
     const users = store.get("users") as User[] | undefined
-    
+
     const remain = users?.filter(user => {
         return user.name !== name && user.email !== email
     })
