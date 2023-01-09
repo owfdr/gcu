@@ -11,7 +11,7 @@
   "bin": "bin/index.js",
   "scripts": {
     "build": "npx tsc",
-    "dev": "npx ts-node src/cli.ts"
+    "dev": "npx ts-node src/index.ts"
   },
   "keywords": [
     "git",
