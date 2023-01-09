@@ -1,7 +1,7 @@
 import inquirer from "inquirer"
 import store, { User } from "./store.js"
 
-type PromptOption = "createGlobal" | "newProfile" | "whichScope" | "whichUser"
+type PromptOption = "createGlobal" | "newProfile" | "whichScope" | "whichUser" | "deleteUser"
 
 export default function prompt(type: PromptOption) {
     if (type === "createGlobal") {
@@ -20,12 +20,14 @@ export default function prompt(type: PromptOption) {
             {
                 type: "input",
                 name: "name",
+                message: "username:",
                 filter: whitespace,
                 validate: text
             },
             {
                 type: "input",
                 name: "email",
+                message: "email:",
                 filter: whitespace,
                 validate: text
             }
@@ -37,12 +39,12 @@ export default function prompt(type: PromptOption) {
             {
                 type: "list",
                 name: "scope",
-                message: "which scope of the profile do you wish to change (add)?",
+                message: "which scope of the profile to change?",
                 choices: [
-                    { name: "global 🌎", value: "global" },
+                    { name: "global 🌎", value: "global", },
                     { name: "local  📁", value: "local" },
                     new inquirer.Separator() as any,
-                    { name: "cancel", value: "cancel"}
+                    { name: "cancel", value: "cancel" }
                 ]
             }
         ])
@@ -53,8 +55,21 @@ export default function prompt(type: PromptOption) {
             {
                 type: "list",
                 name: "user",
-                message: "Which profile do you wish to use?",
-                choices: generateUserList()
+                loop: false,
+                message: "Which profile to use?",
+                choices: generateUserList("select")
+            }
+        ])
+    }
+
+    if (type === "deleteUser") {
+        return inquirer.prompt([
+            {
+                type: "list",
+                name: "user",
+                loop: false,
+                message: "Which profile to delete?",
+                choices: generateUserList("delete")
             }
         ])
     }
@@ -62,21 +77,46 @@ export default function prompt(type: PromptOption) {
     throw "not exhaustive"
 }
 
-function generateUserList() {
+function generateUserList(type: "select" | "delete") {
     const users = store.get('users') as User[]
-    const list = users.map((user, index) => {
+    const list = users.map(user => {
+        const { name, email } = user
+
         return {
-            name: `${user.name} <${user.email}>`, 
-            value: index
+            name: `${type === "delete" ? "❌" : ""} ${name} <${email}>`,
+            value: { name, email, option: "" }
         }
     })
 
-    list.push(new inquirer.Separator() as any)
+    if (type === "select") {
+        list.push(
+            new inquirer.Separator() as any,
+            {
+                name: "add new    +",
+                value: { name: "", email: "", option: "add" },
+            },
+            {
+                name: "delete one -",
+                value: { name: "", email: "", option: "delete" },
+            },
+            new inquirer.Separator() as any,
+            {
+                name: "cancel",
+                value: { name: "", email: "", option: "cancel" },
+            }
+        )
+    }
 
-    list.push({
-        name: "add new one 🙋+",
-        value: -1
-    })
+    if (type === "delete") {
+        list.push(
+            new inquirer.Separator() as any,
+            {
+                name: "cancel",
+                value: { name: "", email: "", option: "cancel" },
+            }
+        )
+    }
+
 
     return list
 }

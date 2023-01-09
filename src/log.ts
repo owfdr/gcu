@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { Config } from "./git";
 
-type Message = "welcome" | "globalStatus" | "localStatus" | "notFound" | "added"
+type Message = "welcome" | "notFound" | "added" | "deleted" | "global" | "local" | "exit"
 
 export default {
     message(type: Message, ...data: (string | undefined)[]) {
@@ -13,22 +13,12 @@ export default {
             console.log("");
         }
 
-        if (type === "globalStatus") {
-            if (data[0] && data[1]) {
-                console.log(" 🌎 Global user name  :", chalk.blue(`'${data[0]}'`))
-                console.log(" 🌎 Global user email :", chalk.blue(`'${data[1]}'`))
-            }
-            console.log()
+        if (type === "global") {
+            console.log("Your are at: Global 🌎")
         }
 
-        if (type === "localStatus") {
-            if (data[0] && data[1]) {
-                console.log(" 📁 Local user name   :", chalk.gray(`'${data[0]}'`))
-                console.log(" 📁 Local user email  :", chalk.gray(`'${data[1]}'`))
-            } else {
-                console.log(chalk.yellow(` 💡 No local configs have been found`))
-            }
-            console.log()
+        if (type === "local") {
+            console.log("Your are at: Local 📁")
         }
 
         if (type === "notFound") {
@@ -37,8 +27,24 @@ export default {
         }
 
         if (type === "added") {
+            const user = `${data[0]} <${data[1]}>`
+            const boxed = box(user, "added ✅")
+
+            console.log(chalk.green(boxed))
             console.log()
-            console.log(chalk.green(chalk.bold(`'${data[0]} <${data[1]}>'`, "is registered!")))
+        }
+
+        if (type === "deleted") {
+            const user = `${data[0]} <${data[1]}>`
+            const boxed = box(user, "deleted 🗑️")
+            
+            console.log(chalk.red(boxed))
+            console.log()
+        }
+
+        if (type === "exit") {
+            console.log("program exited. (👋)")
+            console.log()
         }
 
     },
@@ -58,4 +64,12 @@ export default {
             console.log()
         }
     },
+}
+
+function box(text: string, suffix: string = "") {
+    const upperBox = "┌─" + "─".repeat(text.length) + "─┐"
+    const middleBox = "│ " + text + " │ "  + suffix
+    const lowerBox = "└─" + "─".repeat(text.length) + "─┘"
+    
+    return upperBox + "\n" + middleBox + "\n" + lowerBox
 }

@@ -1,6 +1,6 @@
 import prompt from "./prompt.js";
-import { Config } from "./git.js";
-import { saveToStore } from "./store.js";
+import git, { Config } from "./git.js";
+import { removeFromStore, saveToStore } from "./store.js";
 import log from "./log.js";
 
 export default async function switchProfile(config: Config) {
@@ -8,32 +8,45 @@ export default async function switchProfile(config: Config) {
 
     const { scope } = await prompt('whichScope')
 
-    if (scope === "global") {
-        const index = await chooseUser()
-        writeToGitProfile(index)
+    if (scope === "cancel") {
+        log.message("exit")
+        process.exit(0)
     }
 
-    if (scope === "local") {
-        const index = await chooseUser()
-        writeToGitProfile(index)
-    }
+    const user = await chooseUser(scope)
 
-    process.exit(0)
+    git.change(user, scope).then(() => {
+        console.log("change success!")
+    })
 }
 
-function writeToGitProfile(index: number) {
-    // TODO: write logic
-    console.log("writing to git profile...")
-}
-
-async function chooseUser() {
-
+async function chooseUser(scope: "global" | "local") {
     const { user } = await prompt("whichUser")
 
-    if (user === -1) {
+    if (user.option === "add") {
         await prompt("newProfile").then(saveToStore)
-        await chooseUser()
+        
+        log.message(scope)
+        await chooseUser(scope)
     }
 
-    return user
+    if (user.option === "delete") {
+        const { user } = await prompt("deleteUser")
+
+        if (user.option !== "cancel") {
+            removeFromStore(user)
+        } 
+
+        log.message(scope)
+        await chooseUser(scope)
+    }
+    
+    if (user.option === "cancel") {
+        log.message("exit")
+        process.exit(0)
+    }
+
+    delete user.option
+
+    return user as { name: string, email: string }
 }

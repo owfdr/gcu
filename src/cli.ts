@@ -12,16 +12,15 @@ program
 
 log.message("welcome");
 
-(async function () {
+(async function main() {
     while (true) {
         const config = await git.user()
 
         if (config.global) {
             await switchProfile(config)
+            break
         } else {
             await createGlobal()
         }
-
-        break
     }
 }())
