@@ -3,12 +3,8 @@
   "version": "0.1.0",
   "description": "Git Change User - change git user with good attitude",
   "main": "bin/index.js",
-  "files": [
-    "bin",
-    "src"
-  ],
-  "type": "module",
   "bin": "bin/index.js",
+  "type": "module",
   "scripts": {
     "build": "npx tsc",
     "dev": "npx ts-node src/index.ts"
