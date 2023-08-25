@@ -7,7 +7,7 @@ import log from "./log.js";
 program
   .name("gcu")
   .version("0.1.0")
-  .description("gcu - change git user with good attitude")
+  .description("gcu - change git user elegantly")
   .parse();
 
 log.message("welcome");
