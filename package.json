@@ -7,8 +7,9 @@
   "type": "module",
   "scripts": {
     "dev": "npx ts-node src/index.ts",
-    "build": "npx rollup --config ",
-    "publish": "npm run build && npm publish --access public"
+    "build": "npx rollup --config",
+    "release": "standard-version",
+    "publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "@types/node": "^18.11.18",
     "prettier": "3.0.2",
     "rollup": "^3.28.1",
+    "standard-version": "^9.5.0",
     "ts-node": "^10.9.1",
     "tsc": "^2.0.4"
   }
