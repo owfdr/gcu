@@ -20,25 +20,27 @@ export default async function switchProfile(config: Config) {
   });
 }
 
-async function chooseUser(scope: "global" | "local") {
-  const { user } = await prompt("whichUser");
+async function chooseUser(
+  scope: "global" | "local",
+): Promise<{ name: string; email: string }> {
+  let { user } = await prompt("whichUser");
 
   if (user.option === "add") {
     await prompt("newProfile").then(saveToStore);
 
     log.message(scope);
-    await chooseUser(scope);
+    return await chooseUser(scope);
   }
 
   if (user.option === "delete") {
-    const { user } = await prompt("deleteUser");
+    let { user } = await prompt("deleteUser");
 
     if (user.option !== "cancel") {
       removeFromStore(user);
     }
 
     log.message(scope);
-    await chooseUser(scope);
+    return await chooseUser(scope);
   }
 
   if (user.option === "cancel") {
@@ -47,6 +49,5 @@ async function chooseUser(scope: "global" | "local") {
   }
 
   delete user.option;
-
-  return user as { name: string; email: string };
+  return user;
 }
