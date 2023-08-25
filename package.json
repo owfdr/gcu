@@ -39,6 +39,7 @@
     "@tsconfig/recommended": "^1.0.1",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.11.18",
+    "prettier": "3.0.2",
     "ts-node": "^10.9.1",
     "tsc": "^2.0.4"
   }
