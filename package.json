@@ -1,5 +1,5 @@
 {
-  "name": "gcu",
+  "name": "@owfdr/gcu",
   "version": "0.1.0",
   "description": "Git Change User - change git user elegantly",
   "main": "bin/index.js",
@@ -7,7 +7,12 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "dev": "npx ts-node src/index.ts"
+    "dev": "npx ts-node src/index.ts",
+    "publish": "npm run build && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owfdr/gcu.git"
   },
   "keywords": [
     "git",
@@ -19,6 +24,10 @@
   ],
   "author": "owfdr <owfdr@ourworld.center>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/owfdr/gcu/issues"
+  },
+  "homepage": "https://github.com/owfdr/gcu",
   "dependencies": {
     "chalk": "^5.2.0",
     "commander": "^9.4.1",
