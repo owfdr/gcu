@@ -4,49 +4,49 @@ import { removeFromStore, saveToStore } from "./store.js";
 import log from "./log.js";
 
 export default async function switchProfile(config: Config) {
-    log.dashboard(config)
+  log.dashboard(config);
 
-    const { scope } = await prompt('whichScope')
+  const { scope } = await prompt("whichScope");
 
-    if (scope === "cancel") {
-        log.message("exit")
-        process.exit(0)
-    }
+  if (scope === "cancel") {
+    log.message("exit");
+    process.exit(0);
+  }
 
-    const user = await chooseUser(scope)
+  const user = await chooseUser(scope);
 
-    git.change(user, scope).then(() => {
-        console.log("change success!")
-    })
+  git.change(user, scope).then(() => {
+    console.log("change success!");
+  });
 }
 
 async function chooseUser(scope: "global" | "local") {
-    const { user } = await prompt("whichUser")
+  const { user } = await prompt("whichUser");
 
-    if (user.option === "add") {
-        await prompt("newProfile").then(saveToStore)
-        
-        log.message(scope)
-        await chooseUser(scope)
+  if (user.option === "add") {
+    await prompt("newProfile").then(saveToStore);
+
+    log.message(scope);
+    await chooseUser(scope);
+  }
+
+  if (user.option === "delete") {
+    const { user } = await prompt("deleteUser");
+
+    if (user.option !== "cancel") {
+      removeFromStore(user);
     }
 
-    if (user.option === "delete") {
-        const { user } = await prompt("deleteUser")
+    log.message(scope);
+    await chooseUser(scope);
+  }
 
-        if (user.option !== "cancel") {
-            removeFromStore(user)
-        } 
+  if (user.option === "cancel") {
+    log.message("exit");
+    process.exit(0);
+  }
 
-        log.message(scope)
-        await chooseUser(scope)
-    }
-    
-    if (user.option === "cancel") {
-        log.message("exit")
-        process.exit(0)
-    }
+  delete user.option;
 
-    delete user.option
-
-    return user as { name: string, email: string }
+  return user as { name: string; email: string };
 }

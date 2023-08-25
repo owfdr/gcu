@@ -38,7 +38,7 @@ export default {
 
     if (type === "notFound") {
       console.log(
-        chalk.yellow(chalk.bold(` 😿 git user profile not found...`))
+        chalk.yellow(chalk.bold(` 😿 git user profile not found...`)),
       );
       console.log();
     }
@@ -68,8 +68,8 @@ export default {
       console.log();
       console.log(
         chalk.yellow(
-          chalk.bold(` 😿 Sorry, you must initialize a Git repository first.`)
-        )
+          chalk.bold(` 😿 Sorry, you must initialize a Git repository first.`),
+        ),
       );
       console.log(chalk.green(` 🌱 Try "git init"`));
       console.log();
