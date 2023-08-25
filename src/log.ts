@@ -14,7 +14,14 @@ type Message =
 export default {
   message(type: Message, ...data: (string | undefined)[]) {
     if (type === "welcome") {
-      console.log("");
+      console.log(chalk.dim("         ,»-╓"));
+      console.log(chalk.dim("       #╠≥▒╠░░≥≤╩ë╗ç"));
+      console.log(chalk.dim("       ▒▓╣╩╩╚║╩╬▒╠╠╠▓"));
+      console.log(chalk.dim("      #▒╙░╙╬╬å█▄╫╩╚╠╣▌"));
+      console.log(chalk.dim('     ▐╩█#^░ ]╙▓╣▄""≈╫╬▒'));
+      console.log(chalk.dim("    sΓ▐!▒░║µ.░╠╝╠▒▒Ç²╫║▌"));
+      console.log(chalk.dim("  %▄⌐ `  ╠▓█░▒╠▒░╠░░▒╬▓▌"));
+      console.log(chalk.dim("   ╙φ▄▄▄█▀╢▒░▒▒░⌐╙│║▒╢█▌"));
       console.log(chalk.grey("╔═╗╔═╗╦ ╦"), " ==========================");
       console.log(chalk.grey("║ ╦║  ║ ║"), " Welcome to Git Change User");
       console.log(chalk.grey("╚═╝╚═╝╚═╝"), " ==========================");
