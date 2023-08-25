@@ -1,14 +1,16 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src/**/*"],
   "compilerOptions": {
-    "outDir": "dist",
-    "module": "ES2020",
-    "target": "ES2020",
-    "declaration": true,
-    "moduleResolution": "Node"
+    "target": "ES6",
+    "allowJs": true,
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
   },
+  "include": ["src/**/*"],
   "ts-node": {
-    "esm": true
-  }
+    "esm": true,
+  },
 }

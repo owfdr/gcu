@@ -1,4 +1,4 @@
-import Conf from "conf/dist/source/index.js";
+import Conf from "conf";
 import log from "./log.js";
 
 const store = new Conf({ projectName: "gcu" });

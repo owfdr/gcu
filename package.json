@@ -6,8 +6,8 @@
   "bin": "bin/index.js",
   "type": "module",
   "scripts": {
-    "build": "npx tsc",
     "dev": "npx ts-node src/index.ts",
+    "build": "npx rollup --config ",
     "publish": "npm run build && npm publish --access public"
   },
   "repository": {
@@ -36,10 +36,12 @@
     "inquirer": "^9.1.4"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.2",
     "@tsconfig/recommended": "^1.0.1",
     "@types/inquirer": "^9.0.3",
     "@types/node": "^18.11.18",
     "prettier": "3.0.2",
+    "rollup": "^3.28.1",
     "ts-node": "^10.9.1",
     "tsc": "^2.0.4"
   }
