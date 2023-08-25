@@ -16,7 +16,8 @@ export default async function switchProfile(config: Config) {
   const user = await chooseUser(scope);
 
   git.change(user, scope).then(() => {
-    console.log("change success!");
+    log.message("changeSuccess", user.name, user.email);
+    process.exit(0);
   });
 }
 

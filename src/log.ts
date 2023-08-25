@@ -9,7 +9,8 @@ type Message =
   | "global"
   | "local"
   | "exit"
-  | "yetInitialized";
+  | "yetInitialized"
+  | "changeSuccess";
 
 export default {
   message(type: Message, ...data: (string | undefined)[]) {
@@ -72,6 +73,18 @@ export default {
         ),
       );
       console.log(chalk.green(` 🌱 Try "git init"`));
+      console.log();
+    }
+
+    if (type === "changeSuccess") {
+      const user = `${data[0]} <${data[1]}>`;
+      const boxed = box(user, "became the current user ✅");
+
+      console.log();
+      console.log(
+        chalk.green(chalk.bold(` 🎉 Git user changed successfully!`)),
+      );
+      console.log(chalk.green(boxed));
       console.log();
     }
   },
