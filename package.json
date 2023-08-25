@@ -1,7 +1,7 @@
 {
   "name": "gcu",
   "version": "0.1.0",
-  "description": "Git Change User - change git user with good attitude",
+  "description": "Git Change User - change git user elegantly",
   "main": "bin/index.js",
   "bin": "bin/index.js",
   "type": "module",
